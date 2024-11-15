@@ -1,5 +1,8 @@
 # PYCACHE
-__pycache__/*
+**/__pycache__/*
 
 # ENTORNO VIRTUAL
 venv/*
+
+# DATOS
+inventario.json
