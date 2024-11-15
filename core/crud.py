@@ -1,0 +1,75 @@
+from file_helpers import write_json_file
+from config import INVENTARIO_PATH
+
+
+def add_lote(lotes:list[dict]):
+    fruta = input('¿Qué dulce preparó? : ')
+    tipo = input('¿Qué frasco utilizó? : ')
+    capacidad = input('¿Qué capacidad tiene el frasco? : ')
+    cantidad = int(input('¿Cuántos frascos preparó? : '))
+    año_de_produccion = int(input('¿Año de producción? : '))
+    tiempo_de_almacenamiento = 'Produccion.tiempo_de_almacenamiento'
+    new_lote = {
+        'Fruta':fruta, 
+        'Frasco':tipo, 
+        'Capacidad':capacidad, 
+        'Cantidad':cantidad, 
+        'Año':año_de_produccion, 
+        'Tiempo':tiempo_de_almacenamiento}
+    
+    i = len(lotes)
+    print(f'\n'+'Usted agregó un nuevo lote:'+'\n')
+    print(f'==== Lote {i+1} ====')
+
+    for key, value in new_lote.items():
+        print(f'{key}:{value}')
+    lotes.append(new_lote)
+    write_json_file(INVENTARIO_PATH, lotes)
+
+
+def update_lote(lotes:list[dict]):
+    show_lotes(lotes)
+    print('\n')
+    to_update = int(input('¿Qué lote desea modificar? : ')) - 1
+    print('\n'+'Usted va a modificar el siguiente lote:'+'\n')
+    print(f'==== Lote {to_update+1} ====')
+
+    for key, value in lotes[to_update].items():
+        print(f'{key}:{value}')
+
+    print('\n')
+    extraidos = int(input('¿Cuántos frascos va a extraer? : '))
+    print('\n')
+    print(f'Usted tenía {lotes[to_update]['Cantidad']} frascos disponibles en el lote {to_update+1}.')
+    lotes[to_update]['Cantidad'] -= extraidos #lotes[to_update]['Cantidad'] = lotes[to_update]['Cantidad'] - extraidos
+    print(f'Ahora tiene {lotes[to_update]['Cantidad']} frascos disponibles en el lote {to_update+1}.')
+    write_json_file(INVENTARIO_PATH, lotes)
+
+
+def show_lotes(lotes:list[dict]):
+    print('Usted posee los siguientes lotes:'+'\n')
+    n = 1
+    for lote in lotes:
+        print(f'==== LOTE {n} ====')
+        
+        for key, value in lote.items():
+            print(f'{key}:{value}')
+        
+        n += 1
+    
+    print('\n')
+
+
+def delete_lote(lotes:list[dict]):
+    show_lotes(lotes)
+    to_delete = int(input('¿Qué lote desea eliminar? : ')) - 1
+    print(f'\n'+'Usted seleccionó eliminar el siguiente lote:'+'\n')
+    print(f'==== Lote {to_delete+1} ===='+'\n')
+
+    for key, value in lotes[to_delete].items():
+        print(f'{key}:{value}')
+
+    deleted = lotes.pop(to_delete)
+    print('\n')
+    print(f'Lote {to_delete+1} : Dulce de {deleted['Fruta']} - Año {deleted['Año']} eliminado.')
+    write_json_file(INVENTARIO_PATH, lotes)
