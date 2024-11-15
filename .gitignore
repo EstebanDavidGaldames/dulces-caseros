@@ -1,1 +1,5 @@
+# PYCACHE
 __pycache__/*
+
+# ENTORNO VIRTUAL
+venv/*
