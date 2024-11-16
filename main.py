@@ -13,9 +13,6 @@ def menu():
     print('E: SALIR\n')
 
 
-
-
-
 def main():
     lotes = read_json_file(INVENTARIO_PATH)
 
