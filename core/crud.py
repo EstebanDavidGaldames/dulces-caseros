@@ -5,11 +5,11 @@ from screen_helpers import clear_screen
 
 
 def add_lote(lotes:list[dict]):
-    fruta = get_fruta() #input('¿Qué dulce preparó? : ')
-    tipo = get_frasco() #input('¿Qué frasco utilizó? : ')
+    fruta = get_fruta()
+    tipo = get_frasco()
     #capacidad = input('¿Qué capacidad tiene el frasco? : ')
-    cantidad = get_cantidad() #int(input('¿Cuántos frascos preparó? : '))
-    año_de_produccion = get_fecha_produccion() #int(input('¿Año de producción? : '))
+    cantidad = get_cantidad()
+    año_de_produccion = get_fecha_produccion()
     tiempo_de_almacenamiento = 'Produccion.tiempo_de_almacenamiento'
     new_lote = {
         'Fruta':fruta, 
@@ -31,7 +31,6 @@ def add_lote(lotes:list[dict]):
 
 def update_lote(lotes:list[dict]):
     while True:
-    
         show_lotes(lotes)
         print('\n')
         try:
@@ -58,55 +57,61 @@ def update_lote(lotes:list[dict]):
                             write_json_file(INVENTARIO_PATH, lotes)
                             break
                         else:
-                            print('No ingresó una cantidad válida.')
+                            print('No ingresó una cantidad válida.'+'\n')
                     except ValueError:
-                        print('No ingresó un número válido.')
+                        print('No ingresó un número válido.'+'\n')
                 break
             else:
                 clear_screen()
-                print('No ingresó un número de lote válido.')
+                print('No ingresó un número de lote válido.'+'\n')
        
         except ValueError:
             clear_screen()
-            print('No ingresó un número válido.')
+            print('No ingresó un número válido.'+'\n')
 
 
 def show_lotes(lotes:list[dict]):
-    print('Usted posee los siguientes lotes:'+'\n')
-    n = 1
-    for lote in lotes:
-        print(f'==== LOTE {n} ====')
+    if lotes != []:
+        print('Usted posee los siguientes lotes:'+'\n')
+        n = 1
+        for lote in lotes:
+            print(f'==== LOTE {n} ====')
         
-        for key, value in lote.items():
-            print(f'{key}:{value}')
+            for key, value in lote.items():
+                print(f'{key}:{value}')
         
-        n += 1
+            n += 1
     
-    print('\n')
+        print('\n')
+    else:
+        print('Usted no posee ningún lote en el sistema.'+'\n')
 
 
 def delete_lote(lotes:list[dict]):
     show_lotes(lotes)
-    try:
-        to_delete = int(input('¿Qué lote desea eliminar? : ')) - 1
-        if to_delete >=0 and to_delete <= len(lotes):
-            print(f'\n'+'Usted seleccionó eliminar el siguiente lote:'+'\n')
-            print(f'==== Lote {to_delete+1} ===='+'\n')
+    if lotes != []:
+        try:
+            to_delete = int(input('¿Qué lote desea eliminar? : ')) - 1
+            if to_delete >=0 and to_delete <= len(lotes):
+                print(f'\n'+'Usted seleccionó eliminar el siguiente lote:'+'\n')
+                print(f'==== Lote {to_delete+1} ===='+'\n')
 
-            for key, value in lotes[to_delete].items():
-                print(f'{key}:{value}')
+                for key, value in lotes[to_delete].items():
+                    print(f'{key}:{value}')
 
-            deleted = lotes.pop(to_delete)
-            print('\n')
-            print(f'Lote {to_delete+1} : Dulce de {deleted['Fruta']} - Año {deleted['Año']} eliminado.')
-            write_json_file(INVENTARIO_PATH, lotes)
+                deleted = lotes.pop(to_delete)
+                print('\n')
+                print(f'Lote {to_delete+1} : Dulce de {deleted['Fruta']} - Año {deleted['Año']} eliminado.')
+                write_json_file(INVENTARIO_PATH, lotes)
 
-        else:
+            else:
+                clear_screen()
+                print('No ingresó un número de lote válido.'+'\n')
+                delete_lote(lotes)
+
+        except ValueError:
             clear_screen()
-            print('No ingresó un número de lote válido.')
+            print('No ingresó un número válido.'+'\n')
             delete_lote(lotes)
-
-    except ValueError:
-        clear_screen()
-        print('No ingresó un número válido.')
-        delete_lote(lotes)
+    else:
+        pass
