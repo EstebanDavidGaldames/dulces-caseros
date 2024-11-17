@@ -1,3 +1,5 @@
+#from datetime import datetime
+
 from screen_helpers import clear_screen
 
 
@@ -49,7 +51,7 @@ def get_cantidad():
         print('No ingresó un número.'+'\n')
         get_cantidad()
 
-def get_fecha_produccion():
+def get_año():
     try:
         fecha_ingresada = int(input('¿En qué año se produjo el dulce? : ').strip().replace(' ', ''))
         if len(str(fecha_ingresada)) == 4:
@@ -58,8 +60,13 @@ def get_fecha_produccion():
         else:
             clear_screen()
             print('No ingresó un año válido.'+'\n')
-            get_fecha_produccion()
+            get_año()
     except ValueError:
         clear_screen()
         print('No ingresó un número.'+'\n')
-        get_fecha_produccion()
+        get_año()
+
+#def get_tiempo(año:int):
+#        hoy = datetime.now()
+#        año_actual = hoy.year
+#        return año_actual - año

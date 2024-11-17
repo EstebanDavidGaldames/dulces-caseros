@@ -1,21 +1,27 @@
-from screen_helpers import clear_screen, get_option
-from file_helpers import read_json_file
-from config import INVENTARIO_PATH
-from core import add_lote, update_lote, show_lotes, delete_lote
+#from screen_helpers import clear_screen, get_option
+#from file_helpers import read_json_file
+#from config import INVENTARIO_PATH
+#from core import add_lote, update_lote, show_lotes, delete_lote
+#from models.lote_model import Lote
+from controller.lote_controller import LoteController
 
-
-def menu():
-    print('Opciones: \n')
-    print('A: AGREGAR NUEVO LOTE DE DULCES')
-    print('B: MOSTRAR LOTES DE DULCES DISPONIBLES')
-    print('C: EXTRAER FRASCOS DEL INVENTARIO')
-    print('D: ELIMINAR LOTE COMPLETO')
-    print('E: SALIR\n')
+#def menu():
+#    print('Opciones: \n')
+#    print('A: AGREGAR NUEVO LOTE DE DULCES')
+#    print('B: MOSTRAR LOTES DE DULCES DISPONIBLES')
+#    print('C: EXTRAER FRASCOS DEL INVENTARIO')
+#    print('D: ELIMINAR LOTE COMPLETO')
+#    print('E: SALIR\n')
 
 
 def main():
-    lotes = read_json_file(INVENTARIO_PATH)
-
+    LoteController.start()
+    
+    #lotes = read_json_file(INVENTARIO_PATH)
+    #Lote.load()
+    #clear_screen()
+    #print('******************************'+'\n'+'==== INVENTARIO DE DULCES ===='+'\n'+'******************************')
+    '''
     while True:
         menu()
         choosed = input('¿Qué operación deseas realizar? ').upper()
@@ -49,9 +55,7 @@ def main():
             clear_screen()
             print('\n*** ==== INVENTARIO DE DULCES APAGADO=== ***\n')
             break
-
+    '''
 
 if __name__ == '__main__':
-    clear_screen()
-    print('******************************'+'\n'+'==== INVENTARIO DE DULCES ===='+'\n'+'******************************')
     main()
