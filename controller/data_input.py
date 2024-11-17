@@ -1,4 +1,4 @@
-from screen_helpers import clear_screen
+from helpers import clear_screen
 
 
 frutas = ['Manzana', 'Pera', 'Uva', 'Durazno', 'Damasco', 'Ciruela', 'Melón', 'Sandía',

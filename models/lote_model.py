@@ -1,9 +1,11 @@
+from typing import List
+
 from config import INVENTARIO_PATH
-from file_helpers import write_json_file, read_json_file
+from helpers import write_json_file, read_json_file
 
 
 class Lote:
-    all : list['Lote'] = []
+    all : List['Lote'] = []
 
     def __init__(self, fruta, frasco, cantidad, año):
         self.fruta = fruta

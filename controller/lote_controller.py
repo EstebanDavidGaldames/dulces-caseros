@@ -1,7 +1,7 @@
 from termcolor import colored
 
 from models.lote_model import Lote
-from screen_helpers import clear_screen, menu, get_option
+from helpers import clear_screen, menu, get_option
 from .data_input import get_fruta, get_frasco, get_cantidad, get_año
 
 
