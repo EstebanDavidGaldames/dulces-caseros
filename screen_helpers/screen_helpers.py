@@ -2,6 +2,7 @@ import os
 
 from termcolor import colored
 
+
 def clear_screen():
     if os.name == 'nt':
         os.system('cls')

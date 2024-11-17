@@ -1,6 +1,6 @@
 from file_helpers import write_json_file
 from config import INVENTARIO_PATH
-from .data_input import get_fruta, get_frasco, get_cantidad, get_año
+from controller.data_input import get_fruta, get_frasco, get_cantidad, get_año
 from screen_helpers import clear_screen
 
 

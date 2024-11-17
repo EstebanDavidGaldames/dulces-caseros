@@ -2,7 +2,7 @@ from termcolor import colored
 
 from models.lote_model import Lote
 from screen_helpers import clear_screen, menu, get_option
-from core.data_input import get_fruta, get_frasco, get_cantidad, get_año #, get_tiempo
+from .data_input import get_fruta, get_frasco, get_cantidad, get_año
 
 
 class LoteController:
@@ -11,9 +11,11 @@ class LoteController:
     def start(cls):
         Lote.load()
         clear_screen()
+
         while True:
             menu()
             choosed = input(colored('¿Qué operación deseas realizar? ', 'light_cyan')).upper()
+            
             match choosed:
                 case 'A':
                     clear_screen()
@@ -37,7 +39,8 @@ class LoteController:
                     print(colored('Ingrese una opción válida.', 'light_green'))
                     continue
 
-            option = get_option() #input('\n ¿Desea realizar otra operación? ')
+            option = get_option()
+            
             if option == 'S':
                 clear_screen()
                 continue
@@ -46,14 +49,12 @@ class LoteController:
                 print('\n'+colored('*** ==== INVENTARIO DE DULCES APAGADO ==== ***', 'light_red')+'\n')
                 break
 
-    
     @classmethod
     def add_lote(cls):
         fruta = get_fruta()
         frasco = get_frasco()
         cantidad = get_cantidad()
         año = get_año()
-        #tiempo = get_tiempo()
         new_lote = Lote(fruta, frasco, cantidad, año)
         i = len(Lote.all)
         print('\n'+colored('Usted agregó un nuevo lote:', 'green')+'\n')
@@ -62,10 +63,7 @@ class LoteController:
         for key, value in new_lote.__dict__.items():
             print(f'{key.capitalize()} : {value}')
 
-        #lotes.append(new_lote)
         Lote.all.append(new_lote)
-
-        #write_json_file(INVENTARIO_PATH, lotes)
         Lote.save()
 
     @classmethod
@@ -80,21 +78,6 @@ class LoteController:
                 for key, value in lote_obj.__dict__.items():
                     print(f'{key.capitalize()} : {value}')
 
-                '''
-                print(f'{lote_obj.fruta}')
-                print(f'{lote_obj.tipo}')
-                print(f'{lote_obj.cantidad}')
-                print(f'{lote_obj.año}')
-                print(f'{lote_obj.tiempo}')
-                '''
-            # PASANDO Lote a diccionaro:
-            #n = 1
-            #for lote_obj in Lote.all:
-            #    print(f'==== LOTE {n} ====')
-            #    for key, value in lote_obj.__dict__.items():
-            #        print(f'{key}:{value}')
-            #    n += 1
-    
             print('\n')
         else:
             print('Usted no posee ningún lote en el sistema.'+'\n')
@@ -102,6 +85,7 @@ class LoteController:
     @classmethod
     def update_lote(cls):
         cls.show_lotes()
+        
         while Lote.all != []:
             print('\n')
             try:
@@ -120,6 +104,7 @@ class LoteController:
                     while True:
                         try:
                             extraidos = int(input(colored('¿Cuántos frascos va a extraer? : ', 'light_cyan')))
+                            
                             if extraidos >= 0 and extraidos <= Lote.all[to_update].__dict__['cantidad']:
                                 print('\n')
                                 print(f'Usted tenía {Lote.all[to_update].__dict__['cantidad']} frascos disponibles en el lote {to_update+1}.')
@@ -131,9 +116,11 @@ class LoteController:
                                 break
                             else:
                                 print('No ingresó una cantidad válida.'+'\n')
+                        
                         except ValueError:
                             print('No ingresó un número válido.'+'\n')
                     break
+
                 else:
                     clear_screen()
                     print('No ingresó un número de lote válido.'+'\n')
@@ -145,9 +132,11 @@ class LoteController:
     @classmethod
     def delete_lote(cls):
         cls.show_lotes()
+        
         if Lote.all != []:
             try:
                 to_delete = int(input(colored('¿Qué lote desea eliminar? : ', 'blue'))) - 1
+                
                 if to_delete >=0 and to_delete <= len(Lote.all):
                     print(f'\n'+colored('Usted seleccionó eliminar el siguiente lote:', 'light_blue')+'\n')
                     print(f'==== Lote {to_delete+1} ===='+'\n')
@@ -158,9 +147,7 @@ class LoteController:
                     deleted = Lote.all.pop(to_delete)
                     print('\n')
                     print(f'Lote {to_delete+1} : Dulce de {deleted.__dict__['fruta']} - Año {deleted.__dict__['año']} eliminado.')
-                    #write_json_file(INVENTARIO_PATH, lotes)
                     Lote.save()
-
                 else:
                     clear_screen()
                     print('No ingresó un número de lote válido.'+'\n')
@@ -172,9 +159,3 @@ class LoteController:
                 cls.delete_lote()
         else:
             pass
-
-    #@property
-    #def tiempo_de_almacenamiento(self):
-    #   hoy = datetime.now()
-    #    año_actual = hoy.year
-    #    return (año_actual - self.año_de_produccion)
