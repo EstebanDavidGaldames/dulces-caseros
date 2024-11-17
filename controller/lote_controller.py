@@ -1,4 +1,4 @@
-#from datetime import datetime
+from termcolor import colored
 
 from models.lote_model import Lote
 from screen_helpers import clear_screen, menu, get_option
@@ -13,7 +13,7 @@ class LoteController:
         clear_screen()
         while True:
             menu()
-            choosed = input('¿Qué operación deseas realizar? ').upper()
+            choosed = input(colored('¿Qué operación deseas realizar? ', 'light_cyan')).upper()
             match choosed:
                 case 'A':
                     clear_screen()
@@ -29,11 +29,12 @@ class LoteController:
                     cls.delete_lote()
                 case 'E':
                     clear_screen()
-                    print('\n*** ==== INVENTARIO DE DULCES APAGADO=== ***\n')
+                    print('\n'+colored('*** ==== INVENTARIO DE DULCES APAGADO ==== ***', 'light_red')+'\n')
                     break               
                 case _ :
                     clear_screen()
-                    print('No ingresó una opción válida.\nIngrese una opción válida.')
+                    print(colored('No ingresó una opción válida.', 'light_blue')+'\n\n')
+                    print(colored('Ingrese una opción válida.', 'light_green'))
                     continue
 
             option = get_option() #input('\n ¿Desea realizar otra operación? ')
@@ -42,7 +43,7 @@ class LoteController:
                 continue
             elif option == 'N':
                 clear_screen()
-                print('\n*** ==== INVENTARIO DE DULCES APAGADO ==== ***\n')
+                print('\n'+colored('*** ==== INVENTARIO DE DULCES APAGADO ==== ***', 'light_red')+'\n')
                 break
 
     
@@ -55,7 +56,7 @@ class LoteController:
         #tiempo = get_tiempo()
         new_lote = Lote(fruta, frasco, cantidad, año)
         i = len(Lote.all)
-        print(f'\n'+'Usted agregó un nuevo lote:'+'\n')
+        print('\n'+colored('Usted agregó un nuevo lote:', 'green')+'\n')
         print(f'====== Lote {i+1} ======')
         
         for key, value in new_lote.__dict__.items():
@@ -71,7 +72,7 @@ class LoteController:
     def show_lotes(cls):
 
         if Lote.all != []:
-            print('Usted posee los siguientes lotes:'+'\n')
+            print(colored('Usted posee los siguientes lotes:', 'light_green')+'\n')
             
             for i, lote_obj in enumerate(Lote.all, start=1):
                 print(f'====== Lote {i} ======')
@@ -108,7 +109,7 @@ class LoteController:
 
                 if to_update >= 0 and to_update <= len(Lote.all):
                     clear_screen()
-                    print('\n'+'Usted va a modificar el siguiente lote:'+'\n')
+                    print('\n'+colored('Usted va a modificar el siguiente lote:', 'light_blue')+'\n')
                     print(f'====== Lote {to_update+1} ======')
 
                     for key, value in Lote.all[to_update].__dict__.items():
@@ -118,7 +119,7 @@ class LoteController:
 
                     while True:
                         try:
-                            extraidos = int(input('¿Cuántos frascos va a extraer? : '))
+                            extraidos = int(input(colored('¿Cuántos frascos va a extraer? : ', 'light_cyan')))
                             if extraidos >= 0 and extraidos <= Lote.all[to_update].__dict__['cantidad']:
                                 print('\n')
                                 print(f'Usted tenía {Lote.all[to_update].__dict__['cantidad']} frascos disponibles en el lote {to_update+1}.')
@@ -146,9 +147,9 @@ class LoteController:
         cls.show_lotes()
         if Lote.all != []:
             try:
-                to_delete = int(input('¿Qué lote desea eliminar? : ')) - 1
+                to_delete = int(input(colored('¿Qué lote desea eliminar? : ', 'blue'))) - 1
                 if to_delete >=0 and to_delete <= len(Lote.all):
-                    print(f'\n'+'Usted seleccionó eliminar el siguiente lote:'+'\n')
+                    print(f'\n'+colored('Usted seleccionó eliminar el siguiente lote:', 'light_blue')+'\n')
                     print(f'==== Lote {to_delete+1} ===='+'\n')
 
                     for key, value in Lote.all[to_delete].__dict__.items():

@@ -1,6 +1,6 @@
 from file_helpers import write_json_file
 from config import INVENTARIO_PATH
-from .data_input import get_fruta, get_frasco, get_cantidad, get_fecha_produccion
+from .data_input import get_fruta, get_frasco, get_cantidad, get_año
 from screen_helpers import clear_screen
 
 
@@ -9,7 +9,7 @@ def add_lote(lotes:list[dict]):
     tipo = get_frasco()
     #capacidad = input('¿Qué capacidad tiene el frasco? : ')
     cantidad = get_cantidad()
-    año_de_produccion = get_fecha_produccion()
+    año_de_produccion = get_año()
     tiempo_de_almacenamiento = 'Produccion.tiempo_de_almacenamiento'
     new_lote = {
         'Fruta':fruta, 
